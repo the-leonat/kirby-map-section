@@ -12,7 +12,7 @@ sections:
     map:
         type: locations                                
         label: Locations                            # section label
-        query: kirby.page("some-page").children     # query must return a collection of pages
+        query: kirby.page("some-page").children     # query must return a collection of pages, files or a structure
    
         #  optional parameters (with defaults)
           
