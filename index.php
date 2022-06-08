@@ -26,7 +26,7 @@ Kirby::plugin('leonat/locator-section', [
                 'markerLabel' => function (string $markerLabel = '{{page.title}}') {
                     return $markerLabel;
                 },
-                'markerImage' => function (string $markerImage = 'structureItem.image.resize(200).url') {
+                'markerImage' => function (string $markerImage = 'page.image.resize(200).url') {
                     return $markerImage;
                 },
                 'markerInfo' => function (string $markerInfo = '{{page.district}}-{{page.groupShort}}-{{page.num}}') {
@@ -72,7 +72,7 @@ Kirby::plugin('leonat/locator-section', [
                             $markerImage = (new Query($this->markerImage, $queryData))->result();
                             $markerLink = $this->markerLink ? (new Query($this->markerLink, $queryData))->result() : null;
                         } catch (Exception $e) {
-                            // throw $e;
+                            throw $e;
                         }
                         $markerInfo = Str::safeTemplate($this->markerInfo, $queryData);
 
