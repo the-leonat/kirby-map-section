@@ -15,7 +15,7 @@ a custom kirby section for pages which have location data
           
           'markerLocationLat' => 'page.location.yaml.lat',        # lat coordinate
           'markerLocationLong' => 'page.location.yaml.lon',       # lon coordinate
-          'markerLabel' => '{{page.title}}',                      # label for marker popup
+          'markerLabel' => '{{page.title}}',                      # title for marker popup
           'markerImage' => 'page.image.resize(200).url'           # image for marker popup
           'markerInfo' => ''                                      # info text for marker popup
       ]
