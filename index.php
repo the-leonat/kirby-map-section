@@ -14,7 +14,7 @@ Kirby::plugin('leonat/locator-section', [
                     return $label;
                 },
                 // return a collection
-                'query' => function (string $query) {
+                'query' => function (string $query = 'site.index') {
                     return $query;
                 },
                 'markerLocationLat' => function (string $markerLocation = 'page.location.yaml.lat') {
@@ -26,11 +26,14 @@ Kirby::plugin('leonat/locator-section', [
                 'markerLabel' => function (string $markerLabel = '{{page.title}}') {
                     return $markerLabel;
                 },
-                'markerImage' => function (string $markerImage = 'page.image.resize(200).url') {
+                'markerImage' => function (string $markerImage = 'structureItem.image.resize(200).url') {
                     return $markerImage;
                 },
                 'markerInfo' => function (string $markerInfo = '{{page.district}}-{{page.groupShort}}-{{page.num}}') {
                     return $markerInfo;
+                },
+                'markerLink' => function (string $markerLink = null) {
+                    return $markerLink;
                 },
             ],
             'computed' => [
@@ -42,19 +45,35 @@ Kirby::plugin('leonat/locator-section', [
                         'kirby' => kirby(),
                         'page' => page()
                     ]);
-                    $result = $query->result();
-                    if (!is_a($result,  "\Kirby\Cms\Pages")) {
-                        throw new InvalidArgumentException('Query result must be a collection of pages');
+                    $results = $query->result();
+                    if (
+                        !is_a($results,  "\Kirby\Cms\Pages")
+                        && !is_a($results,  "\Kirby\Cms\Structure")
+                        && !is_a($results,  "\Kirby\Cms\Files")
+                    ) {
+                        throw new InvalidArgumentException('Query result must be a collection of pages, files or a structure');
                     }
                     $markerArray = [];
-                    foreach ($result as $page) {
+                    foreach ($results as $result) {
                         $queryData = [
-                            'page' => $page
+                            'page' => $result,
+                            'structureItem' => $result,
+                            'file' => $result
                         ];
-                        $markerLocationLat = (new Query($this->markerLocationLat, $queryData))->result();
-                        $markerLocationLong = (new Query($this->markerLocationLong, $queryData))->result();
-                        $markerLabel = Str::safeTemplate($this->markerLabel, $queryData);
-                        $markerImage = (new Query($this->markerImage, $queryData))->result();
+                        $markerLocationLat = null;
+                        $markerLocationLong = null;
+                        $markerLabel = null;
+                        $markerImage = null;
+                        $markerLink = null;
+                        try {
+                            $markerLocationLat = (new Query($this->markerLocationLat, $queryData))->result();
+                            $markerLocationLong = (new Query($this->markerLocationLong, $queryData))->result();
+                            $markerLabel = Str::safeTemplate($this->markerLabel, $queryData);
+                            $markerImage = (new Query($this->markerImage, $queryData))->result();
+                            $markerLink = $this->markerLink ? (new Query($this->markerLink, $queryData))->result() : null;
+                        } catch (Exception $e) {
+                            // throw $e;
+                        }
                         $markerInfo = Str::safeTemplate($this->markerInfo, $queryData);
 
                         if ($markerLocationLat != null && $markerLocationLong != null) {
@@ -68,7 +87,7 @@ Kirby::plugin('leonat/locator-section', [
                                     'src' => $markerImage,
                                 ],
                                 'info' => $markerInfo,
-                                'link' => $page->panelPath()
+                                'link' => $markerLink
                             ];
                         }
                     }
