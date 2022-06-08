@@ -6,22 +6,19 @@ a custom kirby section for pages which have location data
 ## how to use in blueprint
 
 
-```
-...
-'sections' => [
-      'map' => [
-          'type' => 'locations',                                 
-          'label' => 'Locations',                                 # section label
-          'query' => 'kirby.page("some-page").children',          # query must return a collection of pages
-          
-          # ---- optional parameters (with defaults) ----
-          
-          'markerLocationLat' => 'page.location.yaml.lat',        # lat coordinate
-          'markerLocationLong' => 'page.location.yaml.lon',       # lon coordinate
-          'markerLabel' => '{{page.title}}',                      # title for marker popup
-          'markerImage' => 'page.image.resize(200).url'           # image for marker popup
-          'markerInfo' => ''                                      # info text for marker popup
-      ]
-  ]
+```yaml
 
+sections: 
+    map:
+        type: locations                                
+        label: Locations                            # section label
+        query: kirby.page("some-page").children     # query must return a collection of pages
+   
+        #  optional parameters (with defaults)
+          
+        markerLocationLat: page.location.yaml.lat   # lat coordinate
+        markerLocationLong: page.location.yaml.lon  # lon coordinate
+        markerLabel: '{{page.title}}'               # title for marker popup
+        markerImage: page.image.resize(200).url     # image for marker popup
+        markerInfo: ''                              # info text for marker popup
 ```
