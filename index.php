@@ -32,7 +32,7 @@ Kirby::plugin('leonat/locator-section', [
                 'markerInfo' => function (string $markerInfo = '{{page.district}}-{{page.groupShort}}-{{page.num}}') {
                     return $markerInfo;
                 },
-                'markerLink' => function (string $markerLink = null) {
+                'markerLink' => function (string $markerLink = 'page.panelPath') {
                     return $markerLink;
                 },
             ],
