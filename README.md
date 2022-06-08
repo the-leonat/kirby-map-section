@@ -10,8 +10,9 @@ a custom kirby section for pages which have location data
 ...
 'sections' => [
       'map' => [
-          'type' => 'locations',
-          'query' => 'kirby.page("some-page").children',
+          'type' => 'locations',                                 
+          'label' => 'Locations',                                 # section label
+          'query' => 'kirby.page("some-page").children',          # query must return a collection of pages
           
           # ---- optional parameters (with defaults) ----
           
