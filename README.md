@@ -1,6 +1,8 @@
 # kirby-map-section
 a custom kirby section for pages which have location data
 
+<img width="1304" alt="Screenshot 2022-06-08 at 20 19 30" src="https://user-images.githubusercontent.com/3268017/172688766-a18e3f8e-32d6-40df-9e6b-1ab88eefc674.png">
+
 ## how to use in blueprint
 
 
@@ -20,4 +22,5 @@ a custom kirby section for pages which have location data
           'markerInfo' => ''                                      # info text for marker popup
       ]
   ]
+
 ```
